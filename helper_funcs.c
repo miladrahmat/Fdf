@@ -6,12 +6,11 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/02 16:34:43 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:26:11 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 int	get_rgba(int r, int g, int b, int a)
 {
@@ -25,16 +24,13 @@ void	free_map(t_map *map, bool check)
 	i = 0;
 	if (check == true)
 	{
-		printf("%d\n", map->len_y);
 		while (i < map->len_y)
 		{
 			free(map->memory[i]);
-			map->memory[i] = NULL;
 			i++;
 		}
 	}
 	free(map->memory);
-	map->memory = NULL;
 	map->len_x = 0;
 	map->len_y = 0;
 	map->x = 0;
@@ -56,7 +52,7 @@ int	get_size(int fd, char **arg)
 		check = read(fd, &buf, sizeof(buf));
 		if (check == -1)
 			return (-1);
-		if (buf == '\n')
+		if (buf == '\n' || buf == '\0')
 			count++;
 	}
 	close(fd);

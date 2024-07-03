@@ -6,12 +6,11 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/02 16:40:02 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:25:33 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void	split_free(char **arr)
 {
@@ -61,9 +60,9 @@ int	read_map(t_map *map, int fd, char **arg)
 	int		size;
 
 	size = get_size(fd, arg);
-	if (size == -1)
+	if (size == -1 || size == 0)
 		return (-1);
-	map->memory = malloc(size * sizeof(int *));
+	map->memory = malloc((size + 1) * sizeof(int *));
 	if (map->memory == NULL)
 		return (-1);
 	map->len_y = 0;
@@ -124,12 +123,9 @@ int	main(int argc, char **argv)
 		}
 		map.y++;
 	}
-	printf("Putting image to window\n");
 	mlx_image_to_window(mlx, image, 0, 0);
 	mlx_loop(mlx);
-	printf("Terminating\n");
-	mlx_terminate(mlx);
-	printf("Freeing map\n");
 	free_map(&map, true);
+	mlx_terminate(mlx);
 	exit(0);
 }
