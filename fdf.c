@@ -6,91 +6,20 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/03 14:25:33 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:14:24 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	split_free(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
-	arr = NULL;
-}
-
-int	create_map(t_map *map, char **split)
-{
-	int	i;
-	int	res;
-
-	i = 0;
-	while (split[i] != NULL)
-	{
-		res = ft_atoi(split[i]);
-		ft_memcpy(&map->memory[map->len_y][map->x], &res, sizeof(res));
-		map->x++;
-		i++;
-	}
-	if (map->len_y == 0)
-		map->len_x = map->x;
-	if (map->x != map->len_x)
-	{
-		free_map(map, true);
-		split_free(split);
-		return (-1);
-	}
-	map->len_y++;
-	split_free(split);
-	return (1);
-}
-
-int	read_map(t_map *map, int fd, char **arg)
-{
-	char	**split;
-	char	*gnl;
-	int		size;
-
-	size = get_size(fd, arg);
-	if (size == -1 || size == 0)
-		return (-1);
-	map->memory = malloc((size + 1) * sizeof(int *));
-	if (map->memory == NULL)
-		return (-1);
-	map->len_y = 0;
-	gnl = get_next_line(fd);
-	while (gnl != NULL)
-	{
-		map->x = 0;
-		map->memory[map->len_y] = malloc((ft_strlen(gnl) / 2) * sizeof(int));
-		split = ft_split(gnl, ' ');
-		free(gnl);
-		if (split == NULL || *split == NULL || map->memory[map->len_y] == NULL)
-		{
-			free_map(map, true);
-			return (-1);
-		}
-		if (create_map(map, split) < 0)
-			return (-1);
-		gnl = get_next_line(fd);
-	}
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_map		map;
 	mlx_t		*mlx;
-	mlx_image_t	*image;
+	mlx_image_t	*grid;
+	mlx_image_t	*back;
 	int			fd;
+	int			pix;
 
 	if (argc < 2)
 		exit(1);
@@ -104,26 +33,23 @@ int	main(int argc, char **argv)
 	}
 	else
 		exit(1);
-	mlx = mlx_init(500, 500, "FDF_TEST", true);
+	mlx = mlx_init(2000, 2000, "FDF_TEST", true);
 	if (!mlx)
-		exit(1);
-	image = mlx_new_image(mlx, 250, 250);
-	ft_memset(image->pixels, 255, image->width * image->height * sizeof(int32_t));
-	map.y = 0;
-	while (map.y < map.len_y)
 	{
-		map.x = 0;
-		while (map.x < map.len_x)
-		{
-			if (map.memory[map.y][map.x] == 0)
-				mlx_put_pixel(image, map.x, map.y, get_rgba(255, 255, 255, 255));
-			else
-				mlx_put_pixel(image, map.x, map.y, get_rgba(0, 0, 0, 255));
-			map.x++;
-		}
-		map.y++;
+		free_map(&map, true);
+		exit(1);
 	}
-	mlx_image_to_window(mlx, image, 0, 0);
+	pix = ft_sqrt(map.len_x, map.len_y);
+	grid = mlx_new_image(mlx, 1000, 1000);
+	back = mlx_new_image(mlx, 2000, 2000);
+	draw_x(back, 0, 0, back->width, back->height, 1, get_rgba(0, 0, 0, 255));
+	mlx_image_to_window(mlx, back, 0, 0);
+	draw_map(grid, &map);
+	//draw_x(grid, 0, 0, map.len_x * 40, map.len_y, 40, get_rgba(255, 255, 255, 255));
+	//draw_y(grid, 0, 0, map.len_x, map.len_y * 40, 40, get_rgba(255, 255, 255, 255));
+	//draw_line(grid, 0, 0, 0, 1000, get_rgba(255, 255, 255, 255));
+	mlx_image_to_window(mlx, grid, 600, 700);
+	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	free_map(&map, true);
 	mlx_terminate(mlx);

@@ -5,7 +5,7 @@ LIBMLX	:= MLX42
 HEADERS	:= -I $(LIBMLX)/include/MLX42
 LIBFT	:= libft/libft.a
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	:= fdf.c helper_funcs.c
+SRCS	:= fdf.c map_funcs.c helper_funcs.c line_algo.c
 OBJS	:= ${SRCS:.c=.o}
 
 all: libmlx $(NAME)

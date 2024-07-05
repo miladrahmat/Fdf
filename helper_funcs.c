@@ -6,59 +6,84 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/03 14:26:11 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:58:15 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	ft_sqrt(int x, int y)
+{
+	int	res;
+	int	sqrt;
+
+	res = ((x * x) + (y * y));
+	sqrt = 0;
+	while ((sqrt * sqrt) != res)
+	{
+		if ((sqrt * sqrt) > res)
+		{
+			return (sqrt);
+		}
+		sqrt++;
+	}
+	return (sqrt);
+}
+
+void	ft_hook(void *param)
+{
+	mlx_t	*mlx;
+
+	mlx = param;
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+}
 
 int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	free_map(t_map *map, bool check)
+void	draw_x(mlx_image_t *img, int x, int y,
+	int end_x, int end_y, int pix, uint32_t color)
 {
-	int	i;
+	int	use_x;
+	int	draw;
 
-	i = 0;
-	if (check == true)
+	use_x = x;
+	draw = 0;
+	while (draw < end_y)
 	{
-		while (i < map->len_y)
+		while (use_x < end_x)
 		{
-			free(map->memory[i]);
-			i++;
+			//draw_line(img, use_x, y, end_x, end_y, color);
+			mlx_put_pixel(img, use_x, y, color);
+			use_x++;
 		}
+		draw++;
+		y += pix;
+		use_x = x;
 	}
-	free(map->memory);
-	map->len_x = 0;
-	map->len_y = 0;
-	map->x = 0;
-	map->y = 0;
-	map->z = 0;
 }
 
-int	get_size(int fd, char **arg)
+void	draw_y(mlx_image_t *img, int x, int y,
+	int end_x, int end_y, int pix, uint32_t color)
 {
-	char	buf;
-	int		count;
-	ssize_t	check;
+	int	use_y;
+	int	draw;
 
-	count = 0;
-	buf = '0';
-	check = 1;
-	while (check > 0)
+	use_y = y;
+	draw = 0;
+	while (draw < end_x)
 	{
-		check = read(fd, &buf, sizeof(buf));
-		if (check == -1)
-			return (-1);
-		if (buf == '\n' || buf == '\0')
-			count++;
+		while (use_y < end_y)
+		{
+			//draw_line(img, x, use_y, end_x, end_y, color);
+			mlx_put_pixel(img, x, use_y, color);
+			use_y++;
+		}
+		draw++;
+		x += pix;
+		use_y = y;
 	}
-	close(fd);
-	fd = open(arg[1], O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	else
-		return (count);
 }
