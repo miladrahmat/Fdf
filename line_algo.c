@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/08 13:42:02 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:39:16 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,11 @@ t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 	line.end_x = end_x;
 	line.end_y = end_y;
 	line.dx = start_x - end_x;
-	if (line.dx < 0)
-		line.dx *= -1;
 	if (start_x < end_x)
 		line.sx = 1;
 	else
 		line.sx = -1;
 	line.dy = end_y - start_y;
-	if (line.dy > 0)
-		line.dy *= -1;
 	if (start_y < end_y)
 		line.sy = 1;
 	else
@@ -100,26 +96,21 @@ void	draw_map(mlx_image_t *img, t_map *map)
 {
 	int	x;
 	int	y;
-	int	tmp;
 	int	draw;
 	int	color;
 
 	x = 0;
-	y = 0;
-	tmp = x;
-	//x = (tmp - y) * cos(0.523599);
 	draw = 0;
 	color = get_rgba(255, 255, 255, 255);
-	while (x < (int)img->width)
+	while (draw < map->len_x)
 	{
-		y = 0;//(tmp + y) * sin(0.523599);
-		while (y < (int)img->height)
+		y = 0;
+		while (y < map->len_y)
 		{
-			draw_line(img, x - map->len_x / 2, y - map->len_y / 2, x - map->len_x / 2 + 1, y - map->len_y / 2, color);
-			draw_line(img, x - map->len_x / 2, y - map->len_y / 2, x - map->len_x / 2, y - map->len_y / 2 + 1, color);
-			y++;
+			draw_line(img, x, y, x + 10, y + 5, color);
+			y += 10;
 		}
-		x++;
+		x += 10;
 		draw++;
 	}
 }
