@@ -6,11 +6,31 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/05 17:14:24 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:07:37 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void	draw_background(mlx_image_t *img)
+{
+	int			color;
+	uint16_t	x;
+	uint32_t	y;
+
+	color = get_rgba(0, 0, 0, 255);
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			mlx_put_pixel(img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -42,12 +62,9 @@ int	main(int argc, char **argv)
 	pix = ft_sqrt(map.len_x, map.len_y);
 	grid = mlx_new_image(mlx, 1000, 1000);
 	back = mlx_new_image(mlx, 2000, 2000);
-	draw_x(back, 0, 0, back->width, back->height, 1, get_rgba(0, 0, 0, 255));
+	draw_background(back);
 	mlx_image_to_window(mlx, back, 0, 0);
 	draw_map(grid, &map);
-	//draw_x(grid, 0, 0, map.len_x * 40, map.len_y, 40, get_rgba(255, 255, 255, 255));
-	//draw_y(grid, 0, 0, map.len_x, map.len_y * 40, 40, get_rgba(255, 255, 255, 255));
-	//draw_line(grid, 0, 0, 0, 1000, get_rgba(255, 255, 255, 255));
 	mlx_image_to_window(mlx, grid, 600, 700);
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);

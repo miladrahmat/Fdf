@@ -6,12 +6,13 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/05 17:57:07 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:42:02 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
+#include <math.h>
 
 t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 {
@@ -39,53 +40,86 @@ t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 	return (line);
 }
 
+static void	slope_less(mlx_image_t *img, t_draw *line, uint32_t color)
+{
+	int	p;
+	int	i;
+
+	p = 2 * absolute(line->dy) - absolute(line->dx);
+	i = 0;
+	while (i < absolute(line->dx))
+	{
+		mlx_put_pixel(img, line->start_x, line->start_y, color);
+		line->start_x += line->sx;
+		if (p < 0)
+			p = p + 2 * absolute(line->dy);
+		else
+		{
+			p = p + 2 * absolute(line->dy) - 2 * absolute(line->dx);
+			line->start_y += line->sy;
+		}	
+		i++;
+	}
+}
+
+static void	slope_greater(mlx_image_t *img, t_draw *line, uint32_t color)
+{
+	int	p;
+	int	i;
+
+	p = 2 * absolute(line->dx) - absolute(line->dy);
+	i = 0;
+	while (i < absolute(line->dy))
+	{
+		mlx_put_pixel(img, line->start_x, line->start_y, color);
+		line->start_y += line->sy;
+		if (p < 0)
+			p = p + 2 * absolute(line->dx);
+		else
+		{
+			p = p + 2 * absolute(line->dx) - 2 * absolute(line->dy);
+			line->start_x += line->sx;
+		}
+		i++;
+	}
+}
+
 void	draw_line(mlx_image_t *img, int start_x, int start_y,
 	int end_x, int end_y, uint32_t color)
 {
 	t_draw	line;
 
 	line = init_draw(start_x, start_y, end_x, end_y);
-	while (line.start_x != line.end_x || line.start_y != line.end_y)
-	{
-		mlx_put_pixel(img, line.start_x, line.start_y, color);
-		line.e2 = line.e + line.e;
-		if (line.e2 >= line.dy)
-		{
-			if (line.start_x == line.end_x)
-				break ;
-			line.e = line.e + line.dy;
-			line.start_x = line.start_x + line.sx;
-		}
-		if (line.e2 <= line.dx)
-		{
-			if (line.start_y == line.end_y)
-				break ;
-			line.e = line.e + line.dx;
-			line.start_y = line.start_y + line.sy;
-		}
-	}
+	if (absolute(line.dx) > absolute(line.dy))
+		slope_less(img, &line, color);
+	else
+		slope_greater(img, &line, color);
 }
 
 void	draw_map(mlx_image_t *img, t_map *map)
 {
 	int	x;
 	int	y;
+	int	tmp;
 	int	draw;
 	int	color;
 
 	x = 0;
+	y = 0;
+	tmp = x;
+	//x = (tmp - y) * cos(0.523599);
 	draw = 0;
 	color = get_rgba(255, 255, 255, 255);
-	while (draw < map->len_x)
+	while (x < (int)img->width)
 	{
-		y = 0;
-		while (y < map->len_y)
+		y = 0;//(tmp + y) * sin(0.523599);
+		while (y < (int)img->height)
 		{
-			draw_line(img, x, y, map->len_x, img->height, color);
-			draw_line(img, x, y, x, img->height, color);
-			y += 40;
+			draw_line(img, x - map->len_x / 2, y - map->len_y / 2, x - map->len_x / 2 + 1, y - map->len_y / 2, color);
+			draw_line(img, x - map->len_x / 2, y - map->len_y / 2, x - map->len_x / 2, y - map->len_y / 2 + 1, color);
+			y++;
 		}
-		x += 40;
+		x++;
 		draw++;
 	}
 }

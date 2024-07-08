@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/05 17:14:36 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:02:48 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ int		read_map(t_map *map, int fd, char **arg);
 int		create_map(t_map *map, char **split);
 void	ft_hook(void *param);
 int		ft_sqrt(int x, int y);
-void	draw_x(mlx_image_t *img, int x, int y, int end_x, int end_y, int pix, uint32_t color);
-void	draw_y(mlx_image_t *img, int x, int y, int end_x, int end_y, int pix, uint32_t color);
 void	draw_line(mlx_image_t *img, int start_x, int start_y, int end_x, int end_y, uint32_t color);
 t_draw	init_draw(int start_x, int start_y, int end_x, int end_y);
 void	draw_map(mlx_image_t *img, t_map *map);
+int		absolute(int nbr);
 
 #endif
