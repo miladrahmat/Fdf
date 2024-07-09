@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   line_algo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/08 14:39:16 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:09:24 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
-#include <math.h>
 
 t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 {
@@ -32,7 +31,6 @@ t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 		line.sy = 1;
 	else
 		line.sy = -1;
-	line.e = line.dx + line.dy;
 	return (line);
 }
 
@@ -53,7 +51,7 @@ static void	slope_less(mlx_image_t *img, t_draw *line, uint32_t color)
 		{
 			p = p + 2 * absolute(line->dy) - 2 * absolute(line->dx);
 			line->start_y += line->sy;
-		}	
+		}
 		i++;
 	}
 }
@@ -96,21 +94,48 @@ void	draw_map(mlx_image_t *img, t_map *map)
 {
 	int	x;
 	int	y;
-	int	draw;
+	int	pix_x;
+	int	pix_y;
 	int	color;
 
 	x = 0;
-	draw = 0;
+	y = 0;
+	map->x = 0;
+	map->y = 0;
+	pix_x = img->width / map->len_x;
+	pix_y = img->height / map->len_y;
 	color = get_rgba(255, 255, 255, 255);
-	while (draw < map->len_x)
+	while (map->y < map->len_y - 1)
 	{
-		y = 0;
-		while (y < map->len_y)
+		x = 0;
+		map->x = 0;
+		while (map->x < map->len_x - 1)
 		{
-			draw_line(img, x, y, x + 10, y + 5, color);
-			y += 10;
+			draw_line(img, x, y, x + pix_x, y, color);
+			draw_line(img, x, y, x, y + pix_y, color);
+			x += pix_x;
+			map->x++;
 		}
-		x += 10;
-		draw++;
+		y += pix_y;
+		map->y++;
 	}
+}
+
+void	draw_area(mlx_image_t *img, t_map *map)
+{
+	int			color;
+	int			len_x;
+	int			len_y;
+	uint32_t	x;
+	uint32_t	y;
+
+	color = get_rgba(255, 255, 255, 255);
+	len_x = (img->width / map->len_x) * (map->len_x - 1);
+	len_y = (img->height / map->len_y) * (map->len_y - 1);
+	x = 0;
+	y = 0;
+	draw_line(img, x, y, len_x, y, color);
+	draw_line(img, x, y, x, len_x, color);
+	draw_line(img, len_x, y, len_x, len_y, color);
+	draw_line(img, x, len_y, len_x, len_y, color);
 }

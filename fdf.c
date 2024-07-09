@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/08 12:07:37 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/09 14:06:02 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv)
 	mlx_image_t	*grid;
 	mlx_image_t	*back;
 	int			fd;
-	int			pix;
 
 	if (argc < 2)
 		exit(1);
@@ -53,19 +52,19 @@ int	main(int argc, char **argv)
 	}
 	else
 		exit(1);
-	mlx = mlx_init(2000, 2000, "FDF_TEST", true);
+	mlx = mlx_init(1000, 1000, "FDF_TEST", true);
 	if (!mlx)
 	{
 		free_map(&map, true);
 		exit(1);
 	}
-	pix = ft_sqrt(map.len_x, map.len_y);
-	grid = mlx_new_image(mlx, 1000, 1000);
-	back = mlx_new_image(mlx, 2000, 2000);
+	grid = mlx_new_image(mlx, 500, 500);
+	back = mlx_new_image(mlx, 1000, 1000);
 	draw_background(back);
 	mlx_image_to_window(mlx, back, 0, 0);
+	draw_area(grid, &map);
 	draw_map(grid, &map);
-	mlx_image_to_window(mlx, grid, 600, 700);
+	mlx_image_to_window(mlx, grid, 250, 300);
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	free_map(&map, true);
