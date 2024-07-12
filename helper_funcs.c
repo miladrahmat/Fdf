@@ -6,11 +6,25 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/08 11:50:45 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:33:03 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	isometric(int *x, int *y, int z)
+{
+	int		tmp;
+	double	sin;
+	double	cos;
+
+	tmp = *x;
+	sin = 0.7071;
+	cos = 0.7071;
+	*x = (tmp - *y) * cos;
+	*y = (tmp + *y)  * sin - z;
+}
+
 
 int	ft_sqrt(int x, int y)
 {

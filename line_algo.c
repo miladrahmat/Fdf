@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_algo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/09 14:09:24 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:32:26 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 	line.start_y = start_y;
 	line.end_x = end_x;
 	line.end_y = end_y;
-	line.dx = start_x - end_x;
+	line.dx = end_x - start_x;
 	if (start_x < end_x)
 		line.sx = 1;
 	else
 		line.sx = -1;
-	line.dy = end_y - start_y;
+	line.dy = start_y - end_y;
 	if (start_y < end_y)
 		line.sy = 1;
 	else
@@ -94,48 +94,50 @@ void	draw_map(mlx_image_t *img, t_map *map)
 {
 	int	x;
 	int	y;
-	int	pix_x;
-	int	pix_y;
 	int	color;
 
-	x = 0;
 	y = 0;
-	map->x = 0;
-	map->y = 0;
-	pix_x = img->width / map->len_x;
-	pix_y = img->height / map->len_y;
 	color = get_rgba(255, 255, 255, 255);
-	while (map->y < map->len_y - 1)
+	while (y < map->len_y - 1)
 	{
 		x = 0;
-		map->x = 0;
-		while (map->x < map->len_x - 1)
+		while (x < map->len_x - 1)
 		{
-			draw_line(img, x, y, x + pix_x, y, color);
-			draw_line(img, x, y, x, y + pix_y, color);
-			x += pix_x;
-			map->x++;
+			draw_line(img, map->point[y][x].point_x, map->point[y][x].point_y, map->point[y][x + 1].point_x, map->point[y][x + 1].point_y, color);
+			draw_line(img, map->point[y][x].point_x, map->point[y][x].point_y, map->point[y + 1][x].point_x, map->point[y + 1][x].point_y, color);
+			x++;
 		}
-		y += pix_y;
-		map->y++;
+		y++;
 	}
 }
 
 void	draw_area(mlx_image_t *img, t_map *map)
 {
-	int			color;
-	int			len_x;
-	int			len_y;
-	uint32_t	x;
-	uint32_t	y;
+	int		color;
+	double	start_x;
+	double	start_y;
+	double	end_x;
+	double	end_y;
 
 	color = get_rgba(255, 255, 255, 255);
-	len_x = (img->width / map->len_x) * (map->len_x - 1);
-	len_y = (img->height / map->len_y) * (map->len_y - 1);
-	x = 0;
-	y = 0;
-	draw_line(img, x, y, len_x, y, color);
-	draw_line(img, x, y, x, len_x, color);
-	draw_line(img, len_x, y, len_x, len_y, color);
-	draw_line(img, x, len_y, len_x, len_y, color);
+	start_x = map->point[0][0].point_x;
+	start_y = map->point[0][0].point_y;
+	end_x = map->point[0][map->len_x - 1].point_x;
+	end_y = map->point[0][map->len_x - 1].point_y;
+	draw_line(img, start_x, start_y, end_x, end_y, color);
+	start_x = map->point[0][map->len_x - 1].point_x;
+	start_y = map->point[0][map->len_x - 1].point_y;
+	end_x = map->point[map->len_y - 1][map->len_x - 1].point_x;
+	end_y = map->point[map->len_y - 1][map->len_x - 1].point_y;
+	draw_line(img, start_x, start_y, end_x, end_y, color);
+	start_x = map->point[map->len_y - 1][0].point_x;
+	start_y = map->point[map->len_y - 1][0].point_y;
+	end_x = map->point[map->len_y - 1][map->len_x - 1].point_x;
+	end_y = map->point[map->len_y - 1][map->len_x - 1].point_y;
+	draw_line(img, start_x, start_y, end_x, end_y, color);
+	start_x = map->point[0][0].point_x;
+	start_y = map->point[0][0].point_y;
+	end_x = map->point[map->len_y - 1][0].point_x;
+	end_y = map->point[map->len_y - 1][0].point_y;
+	draw_line(img, start_x, start_y, end_x, end_y, color);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_fucs.c                                         :+:      :+:    :+:   */
+/*   map_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/05 10:54:30 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/12 16:44:37 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	read_map(t_map *map, int fd, char **arg)
 	map->memory = malloc((size + 1) * sizeof(int *));
 	if (map->memory == NULL)
 		return (-1);
+	map->mem_alloc = true;
 	map->len_y = 0;
 	gnl = get_next_line(fd);
 	while (gnl != NULL)
@@ -34,7 +35,7 @@ int	read_map(t_map *map, int fd, char **arg)
 		free(gnl);
 		if (split == NULL || *split == NULL || map->memory[map->len_y] == NULL)
 		{
-			free_map(map, true);
+			free_map(map);
 			return (-1);
 		}
 		if (create_map(map, split) < 0)
@@ -61,7 +62,7 @@ int	create_map(t_map *map, char **split)
 		map->len_x = map->x;
 	if (map->x != map->len_x)
 	{
-		free_map(map, true);
+		free_map(map);
 		split_free(split);
 		return (-1);
 	}
@@ -111,16 +112,25 @@ void	split_free(char **arr)
 	arr = NULL;
 }
 
-void	free_map(t_map *map, bool check)
+void	free_map(t_map *map)
 {
 	int	i;
 
 	i = 0;
-	if (check == true)
+	if (map->mem_alloc == true)
 	{
 		while (i < map->len_y)
 		{
 			free(map->memory[i]);
+			i++;
+		}
+		i = 0;
+	}
+	if (map->point_alloc == true)
+	{
+		while (i < map->len_y)
+		{
+			free(map->point[i]);
 			i++;
 		}
 	}
