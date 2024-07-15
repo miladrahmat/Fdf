@@ -6,12 +6,11 @@
 /*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 14:06:09 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:20:45 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 static void	slope_less(mlx_image_t *img, t_draw *line, uint32_t color)
 {

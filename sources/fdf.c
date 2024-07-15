@@ -6,7 +6,7 @@
 /*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 13:07:13 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:17:29 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	draw_background(mlx_image_t *img)
 {
 	int			color;
-	uint16_t	x;
+	uint32_t	x;
 	uint32_t	y;
 
 	color = get_rgba(0, 0, 0, 255);

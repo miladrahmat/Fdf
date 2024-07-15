@@ -6,7 +6,7 @@
 /*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 14:06:23 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:19:37 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ void	free_map(t_map *map)
 		}
 	}
 	free(map->memory);
-	map->len_x = 0;
-	map->len_y = 0;
-	map->x = 0;
-	map->y = 0;
 }
 
 void	split_free(char **arr)
