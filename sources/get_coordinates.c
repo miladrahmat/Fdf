@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_coordinates.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 16:11:15 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:06:23 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static void	to_isometric(int x, int y, t_map *map, mlx_image_t *img)
 	int	distance;
 	int	offset;
 
-	distance = (img->width / 2) / (map->len_x + map->len_y);
-	offset = img->width / 2;
-	map->point[y][x].x = (x - y) * distance * cos(0.523599) + offset;
-	map->point[y][x].y = (x + y) * distance * sin(0.523599) \
-		- map->memory[y][x] + offset;
+	distance = (img->width / 2) / (map->width + map->height);
+	offset = (img->width - map->width) / 2;
+	map->point[y][x].x = (x - y) * distance * cos(30 * PI / 180) + offset;
+	map->point[y][x].y = (x + y) * distance * sin(30 * PI / 180) \
+		- (map->point[y][x].z * 2) + offset;
 }
 
 int	get_coordinates(mlx_image_t *img, t_map *map)
@@ -30,22 +30,15 @@ int	get_coordinates(mlx_image_t *img, t_map *map)
 	int		y;
 
 	y = 0;
-	map->point = malloc(map->len_y * sizeof(t_point *));
-	if (map->point == NULL)
-		return (-1);
-	while (y < map->len_y)
+	while (y < map->height)
 	{
 		x = 0;
-		map->point[y] = malloc(map->len_x * sizeof(t_point));
-		if (map->point[y] == NULL)
-			return (-1);
-		while (x < map->len_x)
+		while (x < map->width)
 		{
 			to_isometric(x, y, map, img);
 			x++;
 		}
 		y++;
 	}
-	map->point_alloc = true;
 	return (1);
 }

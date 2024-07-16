@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_algo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 16:20:45 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:02:02 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	draw_map(mlx_image_t *img, t_map *map)
 
 	y = 0;
 	color = get_rgba(255, 255, 255, 255);
-	while (y < map->len_y - 1)
+	while (y < map->height - 1)
 	{
 		x = 0;
-		while (x < map->len_x - 1)
+		while (x < map->width - 1)
 		{
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y][x + 1].x, map->point[y][x + 1].y);
@@ -98,22 +98,22 @@ void	draw_area(mlx_image_t *img, t_map *map)
 	color = get_rgba(255, 255, 255, 255);
 	line = init_draw(map->point[0][0].x, \
 		map->point[0][0].y, \
-		map->point[0][map->len_x - 1].x, \
-		map->point[0][map->len_x - 1].y);
+		map->point[0][map->width - 1].x, \
+		map->point[0][map->width - 1].y);
 	draw_line(img, &line, color);
-	line = init_draw(map->point[0][map->len_x - 1].x, \
-		map->point[0][map->len_x - 1].y, \
-		map->point[map->len_y - 1][map->len_x - 1].x, \
-		map->point[map->len_y - 1][map->len_x - 1].y);
+	line = init_draw(map->point[0][map->width - 1].x, \
+		map->point[0][map->width - 1].y, \
+		map->point[map->height - 1][map->width - 1].x, \
+		map->point[map->height - 1][map->width - 1].y);
 	draw_line(img, &line, color);
-	line = init_draw(map->point[map->len_y - 1][0].x, \
-		map->point[map->len_y - 1][0].y, \
-		map->point[map->len_y - 1][map->len_x - 1].x, \
-		map->point[map->len_y - 1][map->len_x - 1].y);
+	line = init_draw(map->point[map->height - 1][0].x, \
+		map->point[map->height - 1][0].y, \
+		map->point[map->height - 1][map->width - 1].x, \
+		map->point[map->height - 1][map->width - 1].y);
 	draw_line(img, &line, color);
 	line = init_draw(map->point[0][0].x, \
 		map->point[0][0].y, \
-		map->point[map->len_y - 1][0].x, \
-		map->point[map->len_y - 1][0].y);
+		map->point[map->height - 1][0].x, \
+		map->point[map->height - 1][0].y);
 	draw_line(img, &line, color);
 }

@@ -51,6 +51,6 @@ fclean: clean
 		rm -f .libmlx && rm -rf $(LIBMLX)/build && \
 		echo "\e[1;32m Removed all executables 🫡 \e[0;37m"
 
-re: clean all
+re: fclean all
 
 .PHONY: all, clean, fclean, re, libmlx

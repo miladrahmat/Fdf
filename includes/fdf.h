@@ -3,35 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 14:03:44 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:10:02 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+# define PI 3.141592653589793238462643383279502884197
 # include <fcntl.h>
 # include <math.h>
 # include "./MLX42/include/MLX42/MLX42.h"
 # include "./libft/libft.h"
+# include "./libft/vector.h"
 
 typedef struct s_point
 {
 	double			x;
 	double			y;
+	int				z;
+	t_vec			rgba;
+	uint32_t		color;
 }	t_point;
 
 typedef struct s_map
 {
-	int			**memory;
 	t_point		**point;
-	int			len_x;
-	int			len_y;
+	int			width;
+	int			height;
 	int			x;
 	int			y;
-	bool		mem_alloc;
 	bool		point_alloc;
 }	t_map;
 

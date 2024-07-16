@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/15 15:19:37 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:02:02 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,15 @@ void	free_map(t_map *map)
 	int	i;
 
 	i = 0;
-	if (map->mem_alloc == true)
-	{
-		while (i < map->len_y)
-		{
-			free(map->memory[i]);
-			i++;
-		}
-		i = 0;
-	}
 	if (map->point_alloc == true)
 	{
-		while (i < map->len_y)
+		while (i < map->height)
 		{
 			free(map->point[i]);
 			i++;
 		}
 	}
-	free(map->memory);
+	free(map->point);
 }
 
 void	split_free(char **arr)
@@ -60,12 +51,10 @@ void	split_free(char **arr)
 
 void	init_map(t_map *map)
 {
-	map->memory = NULL;
 	map->point = NULL;
-	map->mem_alloc = false;
 	map->point_alloc = false;
-	map->len_x = 0;
-	map->len_y = 0;
+	map->width = 0;
+	map->height = 0;
 	map->x = 0;
 	map->y = 0;
 }
