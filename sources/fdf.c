@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 11:58:11 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:20:23 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	handle_window(t_map *map)
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	mlx = mlx_init(1980, 1820, "FIL DE FER", true);
+	mlx = mlx_init(1000, 1000, "FIL DE FER", true);
 	if (!mlx)
 		return (-1);
 	img = mlx_new_image(mlx, mlx->width, mlx->height);
