@@ -6,11 +6,12 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 12:19:20 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:07:03 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 static int	get_size(int fd, char **arg)
 {
@@ -85,22 +86,45 @@ int	create_map(t_map *map, char **split)
 	int		res;
 
 	i = 0;
-	while (split[i] != NULL)
+	if (ft_strchr(split[i], ',') != 0)
 	{
-		res = ft_atoi(split[i]);
-		ft_memcpy(&map->point[map->height][map->x].z, &res, sizeof(res));
-		map->x++;
-		i++;
+		while (split[i] != NULL)
+		{
+			if (get_color(map, split[i]) < 0)
+			{
+				free_map(map);
+				split_free(split);
+				return (-1);
+			}
+			i++;
+			map->x++;
+		}
+		if (map->height == 0)
+			map->width = map->x;
+		if (map->x != map->width)
+			return (-1);
+		map->height++;
 	}
-	if (map->height == 0)
-		map->width = map->x;
-	if (map->x != map->width)
+	else
 	{
-		free_map(map);
-		split_free(split);
-		return (-1);
+		while (split[i] != NULL)
+		{
+			res = ft_atoi(split[i]);
+			ft_memcpy(&map->point[map->height][map->x].z, &res, sizeof(res));
+			map->point[map->height][map->x].color = ft_atoi_base("ffffff", 16);
+			map->x++;
+			i++;
+		}
+		if (map->height == 0)
+			map->width = map->x;
+		if (map->x != map->width)
+		{
+			free_map(map);
+			split_free(split);
+			return (-1);
+		}
+		map->height++;
 	}
-	map->height++;
 	split_free(split);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_coordinates.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- < mrahmat-@student.hive.fi >      +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 14:18:26 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:40:01 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,24 @@ int	get_coordinates(mlx_image_t *img, t_map *map)
 		}
 		y++;
 	}
+	return (1);
+}
+
+int	get_color(t_map *map, char *str)
+{
+	char			**split;
+	int				res;
+	uint32_t		color;
+	uint32_t		col_res;
+
+	split = ft_split(str, ',');
+	if (split == NULL || *split == NULL)
+		return (-1);
+	res = ft_atoi(split[0]);
+	color = ft_atoi_base(split[1] + 2, 16);
+	col_res = convert_rgba();
+	ft_memcpy(&map->point[map->height][map->x].z, &res, sizeof(res));
+	ft_memcpy(&map->point[map->height][map->x].color, &color, sizeof(color));
+	split_free(split);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 11:10:02 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:49:33 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		get_coordinates(mlx_image_t *img, t_map *map);
 int		create_map(t_map *map, char **split);
 void	init_map(t_map *map);
 void	free_map(t_map *map);
+int		get_color(t_map *map, char *str);
 
 //line drawing functions
 

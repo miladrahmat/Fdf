@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 11:02:02 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:32:04 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ void	draw_map(mlx_image_t *img, t_map *map)
 {
 	int		x;
 	int		y;
-	int		color;
 	t_draw	line;
 
 	y = 0;
-	color = get_rgba(255, 255, 255, 255);
 	while (y < map->height - 1)
 	{
 		x = 0;
@@ -80,10 +78,10 @@ void	draw_map(mlx_image_t *img, t_map *map)
 		{
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y][x + 1].x, map->point[y][x + 1].y);
-			draw_line(img, &line, color);
+			draw_line(img, &line, map->point[y][x].color);
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y + 1][x].x, map->point[y + 1][x].y);
-			draw_line(img, &line, color);
+			draw_line(img, &line, map->point[y][x].color);
 			x++;
 		}
 		y++;
