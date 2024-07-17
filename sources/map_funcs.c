@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 18:07:03 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:40:55 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,45 +86,24 @@ int	create_map(t_map *map, char **split)
 	int		res;
 
 	i = 0;
-	if (ft_strchr(split[i], ',') != 0)
+	while (split[i] != NULL)
 	{
-		while (split[i] != NULL)
-		{
-			if (get_color(map, split[i]) < 0)
-			{
-				free_map(map);
-				split_free(split);
-				return (-1);
-			}
-			i++;
-			map->x++;
-		}
-		if (map->height == 0)
-			map->width = map->x;
-		if (map->x != map->width)
-			return (-1);
-		map->height++;
-	}
-	else
-	{
-		while (split[i] != NULL)
+		if (ft_strchr(split[i], ',') != 0)
+			get_color(map, split[i]);
+		else
 		{
 			res = ft_atoi(split[i]);
 			ft_memcpy(&map->point[map->height][map->x].z, &res, sizeof(res));
-			map->point[map->height][map->x].color = ft_atoi_base("ffffff", 16);
-			map->x++;
-			i++;
+			map->point[map->height][map->x].color = \
+				ft_atoi_base("ffffffff", 16);
+			convert_to_rgba(&map->point[map->height][map->x]);
 		}
-		if (map->height == 0)
-			map->width = map->x;
-		if (map->x != map->width)
-		{
-			free_map(map);
-			split_free(split);
-			return (-1);
-		}
-		map->height++;
+		map->x++;
+		i++;
 	}
+	if (map->height == 0)
+		map->width = map->x;
+	map->height++;
 	split_free(split);
 	return (1);
 }

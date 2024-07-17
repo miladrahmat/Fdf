@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 18:49:33 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:41:10 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ typedef struct s_point
 	double			x;
 	double			y;
 	int				z;
-	t_vec			rgba;
+	int				r;
+	int				g;
+	int				b;
+	int				a;
 	uint32_t		color;
 }	t_point;
 
@@ -40,37 +43,44 @@ typedef struct s_map
 
 typedef struct s_draw
 {
-	int	pixels;
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
+	double	start_x;
+	double	start_y;
+	double	end_x;
+	double	end_y;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	double	fraction;
 }	t_draw;
 
 //map functions
 
-int		read_map(t_map *map, int fd, char **arg);
-int		get_coordinates(mlx_image_t *img, t_map *map);
-int		create_map(t_map *map, char **split);
-void	init_map(t_map *map);
-void	free_map(t_map *map);
-int		get_color(t_map *map, char *str);
+int			read_map(t_map *map, int fd, char **arg);
+int			get_coordinates(mlx_image_t *img, t_map *map);
+int			create_map(t_map *map, char **split);
+void		init_map(t_map *map);
+void		free_map(t_map *map);
 
 //line drawing functions
 
-void	draw_line(mlx_image_t *img, t_draw *line, uint32_t color);
-t_draw	init_draw(int start_x, int start_y, int end_x, int end_y);
-void	draw_map(mlx_image_t *img, t_map *map);
-void	draw_area(mlx_image_t *img, t_map *map);
+void		draw_line(mlx_image_t *img, t_draw *line, uint32_t color);
+t_draw		init_draw(double start_x, double start_y, double end_x, \
+				double end_y);
+void		draw_map(mlx_image_t *img, t_map *map);
+void		draw_area(mlx_image_t *img, t_map *map);
+
+//color functions
+
+void		convert_to_rgba(t_point *point);
+int			fraction(double start, double end, double current);
+uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line);
+int			get_color(t_map *map, char *str);
+int			get_rgba(int r, int g, int b, int a);
 
 //helper functions
 
-void	split_free(char **arr);
-int		get_rgba(int r, int g, int b, int a);
-void	ft_hook(void *param);
+void		split_free(char **arr);
+void		ft_hook(void *param);
 
 #endif

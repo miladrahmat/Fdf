@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/16 18:27:11 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:03:22 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
-
-/* int	convert_rgba(int color)
-{
-	
-} */
 
 void	free_map(t_map *map)
 {
@@ -64,7 +59,7 @@ void	init_map(t_map *map)
 	map->y = 0;
 }
 
-t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
+t_draw	init_draw(double start_x, double start_y, double end_x, double end_y)
 {
 	t_draw	line;
 
