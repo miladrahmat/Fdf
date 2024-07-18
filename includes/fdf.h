@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 10:08:10 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:32:21 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_map
 
 typedef struct s_draw
 {
-	double	start_x;
-	double	start_y;
-	double	end_x;
-	double	end_y;
+	int		start_x;
+	int		start_y;
+	int		end_x;
+	int		end_y;
 	int		dx;
 	int		dy;
 	int		sx;
@@ -66,8 +66,7 @@ void		free_map(t_map *map);
 
 void		draw_line(mlx_image_t *img, t_draw *line, t_point *start, \
 				t_point *end);
-t_draw		init_draw(double start_x, double start_y, double end_x, \
-				double end_y);
+t_draw		init_draw(int start_x, int start_y, int end_x, int end_y);
 void		draw_map(mlx_image_t *img, t_map *map);
 void		draw_area(mlx_image_t *img, t_map *map);
 
@@ -83,5 +82,7 @@ int			get_rgba(int r, int g, int b, int a);
 
 void		split_free(char **arr);
 void		ft_hook(void *param);
+char		*add_alpha(char *str);
+int			determine_base(const char *str);
 
 #endif

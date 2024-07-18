@@ -6,26 +6,41 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 10:15:18 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:29:51 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_map(t_map *map)
+double	fraction(double start, double end, double current)
 {
-	int	i;
+	if (start != end)
+		return ((current - start) / (end - start));
+	return (0);
+}
 
-	i = 0;
-	if (map->point_alloc == true)
+char	*add_alpha(char *str)
+{
+	char	*rgba;
+	char	*nl;
+
+	if (ft_strchr(str, '\n') != 0)
 	{
-		while (i < map->height)
-		{
-			free(map->point[i]);
-			i++;
-		}
+		nl = ft_substr(str, 0, ft_strlen(str) - 1);
+		if (determine_base(str) == 1)
+			rgba = ft_strjoin(nl, "ff");
+		else
+			rgba = ft_strjoin(nl, "FF");
+		free(nl);
 	}
-	free(map->point);
+	else
+	{
+		if (determine_base(str) == 1)
+			rgba = ft_strjoin(str, "ff");
+		else
+			rgba = ft_strjoin(str, "FF");
+	}
+	return (rgba);
 }
 
 void	split_free(char **arr)
@@ -54,7 +69,7 @@ void	init_map(t_map *map)
 	map->y = 0;
 }
 
-t_draw	init_draw(double start_x, double start_y, double end_x, double end_y)
+t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
 {
 	t_draw	line;
 

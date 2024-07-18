@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 10:33:35 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:36:24 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	to_isometric(int x, int y, t_map *map, mlx_image_t *img)
 
 	distance = (img->width / 2) / (map->width + map->height);
 	offset = (img->width - map->width) / 2;
-	map->point[y][x].x = (x - y) * distance * cos(65 * PI / 360) + offset;
-	map->point[y][x].y = (x + y) * distance * sin(65 * PI / 360) \
+	map->point[y][x].x = (x - y) * distance * cos(35 * (PI / 180)) + offset;
+	map->point[y][x].y = (x + y) * distance * sin(45 * (PI / 180)) \
 		- (map->point[y][x].z * 2) + offset;
 }
 

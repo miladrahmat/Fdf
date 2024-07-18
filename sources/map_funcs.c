@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 10:33:20 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:50:32 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 
 static int	get_size(int fd, char **arg)
 {
-	char	buf;
 	int		count;
-	ssize_t	check;
+	char	*gnl;
 
 	count = 0;
-	buf = '0';
-	check = 1;
-	while (check > 0)
+	gnl = get_next_line(fd);
+	while (gnl != NULL)
 	{
-		check = read(fd, &buf, sizeof(buf));
-		if (check == -1)
-			return (-1);
-		if (buf == '\n' || buf == '\0')
-			count++;
+		count++;
+		free(gnl);
+		gnl = get_next_line(fd);
 	}
 	close(fd);
 	fd = open(arg[1], O_RDONLY);
@@ -63,8 +59,7 @@ int	read_map(t_map *map, int fd, char **arg)
 	while (gnl != NULL)
 	{
 		map->x = 0;
-		map->point[map->height] = malloc((ft_strlen(gnl) / 2 + 1) \
-			* sizeof(t_point));
+		map->point[map->height] = malloc(ft_strlen(gnl) * sizeof(t_point));
 		split = ft_split(gnl, ' ');
 		free(gnl);
 		if (split == NULL || *split == NULL || map->point[map->height] == NULL)
@@ -74,6 +69,7 @@ int	read_map(t_map *map, int fd, char **arg)
 		}
 		if (create_map(map, split) < 0)
 			return (-1);
+		split_free(split);
 		gnl = get_next_line(fd);
 	}
 	return (1);
@@ -92,7 +88,7 @@ int	create_map(t_map *map, char **split)
 		else
 		{
 			res = ft_atoi(split[i]);
-			ft_memcpy(&map->point[map->height][map->x].z, &res, sizeof(res));
+			map->point[map->height][map->x].z = res;
 			map->point[map->height][map->x].color = \
 				ft_atoi_base("ffffffff", 16);
 			convert_to_rgba(&map->point[map->height][map->x]);
@@ -102,7 +98,24 @@ int	create_map(t_map *map, char **split)
 	}
 	if (map->height == 0)
 		map->width = map->x;
+	if (map->x != map->width)
+		return (-1);
 	map->height++;
-	split_free(split);
 	return (1);
+}
+
+void	free_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	if (map->point_alloc == true)
+	{
+		while (i < map->height)
+		{
+			free(map->point[i]);
+			i++;
+		}
+	}
+	free(map->point);
 }
