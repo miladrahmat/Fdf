@@ -6,11 +6,23 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/17 15:40:46 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:33:42 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	get_rgba(int r, int g, int b, int a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+double	fraction(double start, double end, double current)
+{
+	if (start != end)
+		return ((current - start) / (end - start));
+	return (0);
+}
 
 void	convert_to_rgba(t_point *point)
 {
@@ -31,7 +43,36 @@ uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line)
 	r = start->r + (end->r - start->r) * line->fraction;
 	g = start->g + (end->g - start->g) * line->fraction;
 	b = start->b + (end->b - start->b) * line->fraction;
-	a = start->a;
+	a = start->a + (end->a - start->a) * line->fraction;
 	color = get_rgba(r, g, b, a);
 	return (color);
+}
+
+int	get_color(t_map *map, char *str)
+{
+	char			**split;
+	char			*nl;
+	char			*rgba;
+
+	if (ft_strchr(str, ',') != 0)
+	{
+		split = ft_split(str, ',');
+		if (split == NULL || *split == NULL)
+			return (-1);
+		map->point[map->height][map->x].z = ft_atoi(split[0]);
+		if (ft_strchr(split[1], '\n') != 0)
+		{
+			nl = ft_substr(split[1], 0, ft_strlen(split[1]) - 1);
+			rgba = ft_strjoin(nl, "ff");
+			free(nl);
+		}
+		else
+			rgba = ft_strjoin(split[1], "ff");
+		map->point[map->height][map->x].color = ft_atoi_base(rgba + 2, 16);
+		convert_to_rgba(&map->point[map->height][map->x]);
+		free(rgba);
+		split_free(split);
+		return (1);
+	}
+	return (1);
 }

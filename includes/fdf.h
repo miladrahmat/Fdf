@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/17 15:41:10 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:08:10 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void		free_map(t_map *map);
 
 //line drawing functions
 
-void		draw_line(mlx_image_t *img, t_draw *line, uint32_t color);
+void		draw_line(mlx_image_t *img, t_draw *line, t_point *start, \
+				t_point *end);
 t_draw		init_draw(double start_x, double start_y, double end_x, \
 				double end_y);
 void		draw_map(mlx_image_t *img, t_map *map);
@@ -73,7 +74,7 @@ void		draw_area(mlx_image_t *img, t_map *map);
 //color functions
 
 void		convert_to_rgba(t_point *point);
-int			fraction(double start, double end, double current);
+double		fraction(double start, double end, double current);
 uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line);
 int			get_color(t_map *map, char *str);
 int			get_rgba(int r, int g, int b, int a);

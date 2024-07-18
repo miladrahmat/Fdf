@@ -6,12 +6,11 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/17 15:40:55 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:33:20 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 static int	get_size(int fd, char **arg)
 {

@@ -6,13 +6,14 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/17 15:37:45 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:34:49 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	slope_less(mlx_image_t *img, t_draw *line, t_point *start, t_point *end)
+static void	slope_less(mlx_image_t *img, t_draw *line, \
+	t_point *start, t_point *end)
 {
 	int			p;
 	int			i;
@@ -41,7 +42,8 @@ static void	slope_less(mlx_image_t *img, t_draw *line, t_point *start, t_point *
 	}
 }
 
-static void	slope_greater(mlx_image_t *img, t_draw *line, t_point *start, t_point *end)
+static void	slope_greater(mlx_image_t *img, t_draw *line, \
+	t_point *start, t_point *end)
 {
 	int			p;
 	int			i;

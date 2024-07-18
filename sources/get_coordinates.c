@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/17 15:00:26 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/18 10:33:35 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,3 @@ int	get_coordinates(mlx_image_t *img, t_map *map)
 	}
 	return (1);
 }
-
-int	fraction(double start, double end, double current)
-{
-	if (start != end)
-		return ((current - start) / (end - start));
-	return (0);
-}
-
-int	get_color(t_map *map, char *str)
-{
-	char			**split;
-	char			*nl;
-	char			*rgba;
-
-	if (ft_strchr(str, ',') != 0)
-	{
-		split = ft_split(str, ',');
-		if (split == NULL || *split == NULL)
-			return (-1);
-		map->point[map->height][map->x].z = ft_atoi(split[0]);
-		if (ft_strchr(split[1], '\n') != 0)
-		{
-			nl = ft_substr(split[1], 0, ft_strlen(split[1]) - 1);
-			rgba = ft_strjoin(nl, "ff");
-			free(nl);
-		}
-		else
-			rgba = ft_strjoin(split[1], "ff");
-		map->point[map->height][map->x].color = ft_atoi_base(rgba + 2, 16);
-		free(rgba);
-		split_free(split);
-		return (1);
-	}
-	map->point[map->height][map->x].color = ft_atoi_base(str, 16);
-	return (1);
-}
-
