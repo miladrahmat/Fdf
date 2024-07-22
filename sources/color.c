@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 14:48:51 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:36:03 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	determine_base(const char *str)
 	return (1);
 }
 
-int	get_color(t_map *map, char *str)
+int	get_color(t_map *map, char *str, int index)
 {
 	char			**split;
 	char			*rgba;
@@ -66,10 +66,10 @@ int	get_color(t_map *map, char *str)
 	split = ft_split(str, ',');
 	if (split == NULL || *split == NULL)
 		return (-1);
-	map->point[map->height][map->x].z = ft_atoi(split[0]);
+	map->point[map->height][index].z = ft_atoi(split[0]);
 	rgba = add_alpha(split[1]);
-	map->point[map->height][map->x].color = ft_atoi_base(rgba + 2, 16);
-	convert_to_rgba(&map->point[map->height][map->x]);
+	map->point[map->height][index].color = ft_atoi_base(rgba + 2, 16);
+	convert_to_rgba(&map->point[map->height][index]);
 	free(rgba);
 	split_free(split);
 	return (1);

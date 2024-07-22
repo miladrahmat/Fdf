@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 16:50:32 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:40:19 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,17 @@ int	read_map(t_map *map, int fd, char **arg)
 	gnl = get_next_line(fd);
 	while (gnl != NULL)
 	{
-		map->x = 0;
 		map->point[map->height] = malloc(ft_strlen(gnl) * sizeof(t_point));
-		split = ft_split(gnl, ' ');
-		free(gnl);
-		if (split == NULL || *split == NULL || map->point[map->height] == NULL)
+		if (map->point[map->height] == NULL)
 		{
-			free_map(map);
+			free(gnl);
 			return (-1);
 		}
-		if (create_map(map, split) < 0)
+		split = ft_split(gnl, ' ');
+		free(gnl);
+		if (split == NULL || *split == NULL)
+			return (-1);
+		if (create_map(map, split, 0) < 0)
 			return (-1);
 		split_free(split);
 		gnl = get_next_line(fd);
@@ -75,7 +76,7 @@ int	read_map(t_map *map, int fd, char **arg)
 	return (1);
 }
 
-int	create_map(t_map *map, char **split)
+int	create_map(t_map *map, char **split, int index)
 {
 	int		i;
 	int		res;
@@ -84,38 +85,43 @@ int	create_map(t_map *map, char **split)
 	while (split[i] != NULL)
 	{
 		if (ft_strchr(split[i], ',') != 0)
-			get_color(map, split[i]);
+			get_color(map, split[i++], index++);
 		else
 		{
-			res = ft_atoi(split[i]);
-			map->point[map->height][map->x].z = res;
-			map->point[map->height][map->x].color = \
-				ft_atoi_base("ffffffff", 16);
-			convert_to_rgba(&map->point[map->height][map->x]);
+			res = ft_atoi(split[i++]);
+			map->point[map->height][index].z = res;
+			map->point[map->height][index].color = ft_atoi_base("ffffffff", 16);
+			convert_to_rgba(&map->point[map->height][index++]);
 		}
-		map->x++;
-		i++;
 	}
 	if (map->height == 0)
-		map->width = map->x;
-	if (map->x != map->width)
+		map->width = index;
+	if (index != map->width)
+	{
+		split_free(split);
 		return (-1);
+	}
 	map->height++;
 	return (1);
 }
 
-void	free_map(t_map *map)
+void	free_map(t_map *map, int err)
 {
 	int	i;
 
-	i = 0;
+	if (err == 1)
+		i = map->height;
+	else
+		i = map->height - 1;
 	if (map->point_alloc == true)
 	{
-		while (i < map->height)
+		while (i > 0)
 		{
 			free(map->point[i]);
-			i++;
+			i--;
 		}
+		free(map->point[i]);
+		free(map->point);
+		map->point_alloc = false;
 	}
-	free(map->point);
 }

@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/18 16:39:03 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:33:27 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	handle_window(t_map *map)
 	return (1);
 }
 
-static void	handle_input(char **av, t_map *map)
+static int	handle_input(char **av, t_map *map)
 {
 	int	fd;
 
@@ -70,21 +70,22 @@ static void	handle_input(char **av, t_map *map)
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
-			ft_putendl_fd("\e[1;31m Unable to open file", 2);
-			exit(1);
+			ft_putendl_fd("\e[1;31m Unable to open file \e[0m", 2);
+			return (-1);
 		}
 		if (read_map(map, fd, av) < 0)
 		{
-			ft_putendl_fd("\e[1;31m Error in read_map()", 2);
-			exit(1);
+			ft_putendl_fd("\e[1;31m Error in read_map() \e[0m", 2);
+			return (-1);
 		}
 		close(fd);
 	}
 	else
 	{
-		ft_putendl_fd("\e[1;31m Invalid file", 2);
+		ft_putendl_fd("\e[1;31m Invalid file \e[0m", 2);
 		exit(1);
 	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -93,16 +94,20 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putendl_fd("\e[1;31m Invalid number of arguments", 2);
+		ft_putendl_fd("\e[1;31m Invalid number of arguments \e[0m", 2);
 		exit(1);
 	}
 	init_map(&map);
-	handle_input(argv, &map);
+	if (handle_input(argv, &map) < 0)
+	{
+		free_map(&map, 1);
+		exit (1);
+	}
 	if (handle_window(&map) < 0)
 	{
-		free_map(&map);
+		free_map(&map, 0);
 		exit(1);
 	}
-	free_map(&map);
+	free_map(&map, 0);
 	exit(0);
 }
