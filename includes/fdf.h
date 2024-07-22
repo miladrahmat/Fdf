@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 10:35:50 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:26:32 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_map
 	int			width;
 	int			height;
 	bool		point_alloc;
+	int			zoom;
 }	t_map;
 
 typedef struct s_draw
@@ -56,9 +57,15 @@ typedef struct s_draw
 
 int			read_map(t_map *map, int fd, char **arg);
 int			get_coordinates(mlx_image_t *img, t_map *map);
+int			find_max_z(t_map *map);
 int			create_map(t_map *map, char **split, int index);
 void		init_map(t_map *map);
 void		free_map(t_map *map, int err);
+void		set_scale(t_map *map, mlx_image_t *img);
+int			scale_z(t_map *map, mlx_image_t *img);
+void		find_min_coordinates(t_map *map, t_point *min);
+void		find_max_coordinates(t_map *map, t_point *max);
+void		scale_coordinates(t_map *map, double scale);
 
 //line drawing functions
 

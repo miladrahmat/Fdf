@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 10:33:27 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:00:41 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	handle_window(t_map *map)
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	mlx = mlx_init(2000, 2000, "FIL DE FER", false);
+	mlx = mlx_init(1600, 1000, "FIL DE FER", false);
 	if (!mlx)
 		return (-1);
 	img = mlx_new_image(mlx, mlx->width, mlx->height);

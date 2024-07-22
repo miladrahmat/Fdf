@@ -20,7 +20,8 @@ SRCS	= $(SRC_DIR)fdf.c \
 			$(SRC_DIR)line_algo.c \
 			$(SRC_DIR)get_coordinates.c \
 			$(SRC_DIR)hooks.c \
-			$(SRC_DIR)color.c
+			$(SRC_DIR)color.c \
+			$(SRC_DIR)scale.c
 
 OBJS	= ${SRCS:%.c=%.o}
 
