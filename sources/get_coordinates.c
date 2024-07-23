@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:31:45 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:25:12 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ static void	shift_coordinates(t_map *map, double shift_x, double shift_y)
 		x = 0;
 		while (x < map->width)
 		{
-			map->point[y][x].x += shift_x;
-			map->point[y][x].y += shift_y;
 			map->point[y][x].x *= map->zoom;
 			map->point[y][x].y *= map->zoom;
-			// map->point[y][x].x += offset_x;
-			// map->point[y][x].y += offset_y;
+			map->point[y][x].x += shift_x;
+			map->point[y][x].y += shift_y;
+			map->point[y][x].x += offset_x;
+			map->point[y][x].y += offset_y;
+			map->point[y][x].x += map->x_trans;
+			map->point[y][x].y += map->y_trans;
 			x++;
 		}
 		y++;
@@ -74,5 +76,8 @@ int	get_coordinates(t_map *map)
 	set_scale(map);
 	find_min_coordinates(map, &min);
 	shift_coordinates(map, -min.x, -min.y);
+	// rotate_x(map);
+	// rotate_y(map);
+	// rotate_z(map);
 	return (1);
 }

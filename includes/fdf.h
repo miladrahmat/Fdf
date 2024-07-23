@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:24:51 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:18:20 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ typedef struct s_map
 	int			height;
 	bool		point_alloc;
 	double		zoom;
+	double		alpha;
+	double		gamma;
+	double		theta;
+	int			x_trans;
+	int			y_trans;
 }	t_map;
 
 typedef struct s_draw
@@ -66,6 +71,9 @@ void		set_scale(t_map *map);
 void		find_min_coordinates(t_map *map, t_point *min);
 void		find_max_coordinates(t_map *map, t_point *max);
 void		scale_coordinates(t_map *map, double scale);
+void		rotate_z(t_map *map);
+void		rotate_y(t_map *map);
+void		rotate_x(t_map *map);
 
 //line drawing functions
 
@@ -93,7 +101,8 @@ int			determine_base(const char *str);
 
 //hooks
 
-void	resize(int32_t width, int32_t height, void *param);
-void	zoom(void *param);
+void		resize(int32_t width, int32_t height, void *param);
+void		draw_again(void *param);
+void		hook_translate(t_map *map);
 
 #endif

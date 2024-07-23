@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:13:10 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:08:34 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void	init_map(t_map *map)
 	map->width = 0;
 	map->height = 0;
 	map->zoom = 1;
+	map->x_trans = 0;
+	map->y_trans = 0;
+	map->alpha = 0;
+	map->gamma = 0;
+	map->theta = 0;
 }
 
 t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)

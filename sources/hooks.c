@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:05:22 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:31:14 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:23:26 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,38 @@ void	ft_hook(void *param)
 		mlx_close_window(map->window);
 	if (mlx_is_key_down(map->window, MLX_KEY_EQUAL))
 	{
-		map->zoom += 0.5;
-		zoom(map);
+		map->zoom += 0.1;
+		draw_again(map);
 	}
-	if (mlx_is_key_down(map->window, MLX_KEY_MINUS))
+	if (mlx_is_key_down(map->window, MLX_KEY_MINUS) && map->zoom > 1)
 	{
-		map->zoom -= 0.5;
-		zoom(map);
+		map->zoom -= 0.1;
+		draw_again(map);
+	}
+	hook_translate(map);
+}
+
+void	hook_translate(t_map *map)
+{
+	if (mlx_is_key_down(map->window, MLX_KEY_UP))
+	{
+		map->y_trans -= 5;
+		draw_again(map);
+	}
+	if (mlx_is_key_down(map->window, MLX_KEY_DOWN))
+	{
+		map->y_trans += 5;
+		draw_again(map);
+	}
+	if (mlx_is_key_down(map->window, MLX_KEY_LEFT))
+	{
+		map->x_trans -= 5;
+		draw_again(map);
+	}
+	if (mlx_is_key_down(map->window, MLX_KEY_RIGHT))
+	{
+		map->x_trans += 5;
+		draw_again(map);
 	}
 }
 
@@ -56,7 +81,7 @@ void	resize(int32_t width, int32_t height, void *param)
 	mlx_image_to_window(map->window, map->img, 0, 0);
 }
 
-void	zoom(void *param)
+void	draw_again(void *param)
 {
 	t_map	*map;
 

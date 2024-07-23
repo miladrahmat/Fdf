@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:29:21 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:48:30 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ static void	slope_less(mlx_image_t *img, t_draw *line, \
 	i = 0;
 	x = line->start_x;
 	y = line->start_y;
-	while (i < abs(line->dx))
+	while (i++ < abs(line->dx))
 	{
 		line->fraction = fraction(line->start_x, line->end_x, x);
 		color = calculate_color(start, end, line);
-		mlx_put_pixel(img, x, y, color);
+		if ((x > 0 && x < img->width) && (y > 0 && y < img->height))
+			mlx_put_pixel(img, x, y, color);
 		x += line->sx;
 		if (p < 0)
 			p = p + 2 * abs(line->dy);
@@ -38,7 +39,6 @@ static void	slope_less(mlx_image_t *img, t_draw *line, \
 			p = p + 2 * abs(line->dy) - 2 * abs(line->dx);
 			y += line->sy;
 		}
-		i++;
 	}
 }
 
@@ -55,11 +55,12 @@ static void	slope_greater(mlx_image_t *img, t_draw *line, \
 	i = 0;
 	x = line->start_x;
 	y = line->start_y;
-	while (i < abs(line->dy))
+	while (i++ < abs(line->dy))
 	{
 		line->fraction = fraction(line->start_y, line->end_y, y);
 		color = calculate_color(start, end, line);
-		mlx_put_pixel(img, x, y, color);
+		if ((x > 0 && x < img->width) && (y > 0 && y < img->height))
+			mlx_put_pixel(img, x, y, color);
 		y += line->sy;
 		if (p < 0)
 			p = p + 2 * abs(line->dx);
@@ -68,7 +69,6 @@ static void	slope_greater(mlx_image_t *img, t_draw *line, \
 			p = p + 2 * abs(line->dx) - 2 * abs(line->dy);
 			x += line->sx;
 		}
-		i++;
 	}
 }
 
@@ -94,15 +94,11 @@ void	draw_map(t_map *map)
 		{
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y][x + 1].x, map->point[y][x + 1].y);
-			if (line.start_x >= 0 && line.end_x < (int)map->img->width && \
-				line.start_y >= 0 && line.end_y < (int)map->img->height)
-				draw_line(map->img, &line, &map->point[y][x], \
+			draw_line(map->img, &line, &map->point[y][x], \
 				&map->point[y][x + 1]);
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y + 1][x].x, map->point[y + 1][x].y);
-			if (line.start_x >= 0 && line.end_x < (int)map->img->width && \
-				line.start_y >= 0 && line.end_y < (int)map->img->height)
-				draw_line(map->img, &line, &map->point[y][x], \
+			draw_line(map->img, &line, &map->point[y][x], \
 				&map->point[y + 1][x]);
 			x++;
 		}
