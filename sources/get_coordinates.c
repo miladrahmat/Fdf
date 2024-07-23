@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 11:17:32 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:31:45 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void	shift_coordinates(t_map *map, double shift_x, double shift_y)
 		{
 			map->point[y][x].x += shift_x;
 			map->point[y][x].y += shift_y;
-			map->point[y][x].x += offset_x;
-			map->point[y][x].y += offset_y;
+			map->point[y][x].x *= map->zoom;
+			map->point[y][x].y *= map->zoom;
+			// map->point[y][x].x += offset_x;
+			// map->point[y][x].y += offset_y;
 			x++;
 		}
 		y++;
@@ -64,7 +66,7 @@ int	get_coordinates(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			to_isometric(x * map->zoom, y * map->zoom, map);
+			to_isometric(x, y, map);
 			x++;
 		}
 		y++;

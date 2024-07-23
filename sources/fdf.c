@@ -6,13 +6,13 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 11:56:39 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:20:24 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	draw_background(t_map *map)
+void	draw_background(t_map *map)
 {
 	int			color;
 	uint32_t	x;
@@ -32,7 +32,7 @@ static void	draw_background(t_map *map)
 	}
 }
 
-int	handle_window(t_map *map)
+static int	handle_window(t_map *map)
 {
 	map->window = mlx_init(1600, 1000, "FIL DE FER", true);
 	if (!map->window)

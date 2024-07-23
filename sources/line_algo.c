@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 11:11:09 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:29:21 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,15 @@ void	draw_map(t_map *map)
 		{
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y][x + 1].x, map->point[y][x + 1].y);
-			draw_line(map->img, &line, &map->point[y][x], \
+			if (line.start_x >= 0 && line.end_x < (int)map->img->width && \
+				line.start_y >= 0 && line.end_y < (int)map->img->height)
+				draw_line(map->img, &line, &map->point[y][x], \
 				&map->point[y][x + 1]);
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y + 1][x].x, map->point[y + 1][x].y);
-			draw_line(map->img, &line, &map->point[y][x], \
+			if (line.start_x >= 0 && line.end_x < (int)map->img->width && \
+				line.start_y >= 0 && line.end_y < (int)map->img->height)
+				draw_line(map->img, &line, &map->point[y][x], \
 				&map->point[y + 1][x]);
 			x++;
 		}
