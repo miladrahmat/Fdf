@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 14:09:27 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 11:29:46 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:11:09 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	draw_line(mlx_image_t *img, t_draw *line, t_point *start, t_point *end)
 		slope_greater(img, line, start, end);
 }
 
-void	draw_map(mlx_image_t *img, t_map *map)
+void	draw_map(t_map *map)
 {
 	int		x;
 	int		y;
@@ -94,17 +94,19 @@ void	draw_map(mlx_image_t *img, t_map *map)
 		{
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y][x + 1].x, map->point[y][x + 1].y);
-			draw_line(img, &line, &map->point[y][x], &map->point[y][x + 1]);
+			draw_line(map->img, &line, &map->point[y][x], \
+				&map->point[y][x + 1]);
 			line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 				map->point[y + 1][x].x, map->point[y + 1][x].y);
-			draw_line(img, &line, &map->point[y][x], &map->point[y + 1][x]);
+			draw_line(map->img, &line, &map->point[y][x], \
+				&map->point[y + 1][x]);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_area(mlx_image_t *img, t_map *map)
+void	draw_area(t_map *map)
 {
 	int		x;
 	int		y;
@@ -116,7 +118,7 @@ void	draw_area(mlx_image_t *img, t_map *map)
 	{
 		line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 			map->point[y][x + 1].x, map->point[y][x + 1].y);
-		draw_line(img, &line, &map->point[y][x], &map->point[y][x + 1]);
+		draw_line(map->img, &line, &map->point[y][x], &map->point[y][x + 1]);
 		x++;
 	}
 	y = 0;
@@ -125,7 +127,7 @@ void	draw_area(mlx_image_t *img, t_map *map)
 	{
 		line = init_draw(map->point[y][x].x, map->point[y][x].y, \
 			map->point[y + 1][x].x, map->point[y + 1][x].y);
-		draw_line(img, &line, &map->point[y][x], &map->point[y + 1][x]);
+		draw_line(map->img, &line, &map->point[y][x], &map->point[y + 1][x]);
 		y++;
 	}
 }

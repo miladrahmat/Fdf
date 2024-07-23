@@ -6,13 +6,13 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 18:00:41 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:56:39 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	draw_background(mlx_image_t *img)
+static void	draw_background(t_map *map)
 {
 	int			color;
 	uint32_t	x;
@@ -20,44 +20,43 @@ static void	draw_background(mlx_image_t *img)
 
 	color = get_rgba(0, 0, 0, 255);
 	y = 0;
-	while (y < img->height)
+	while (y < map->img->height)
 	{
 		x = 0;
-		while (x < img->width)
+		while (x < map->img->width)
 		{
-			mlx_put_pixel(img, x, y, color);
+			mlx_put_pixel(map->img, x, y, color);
 			x++;
 		}
 		y++;
 	}
 }
 
-static int	handle_window(t_map *map)
+int	handle_window(t_map *map)
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-
-	mlx = mlx_init(1600, 1000, "FIL DE FER", false);
-	if (!mlx)
+	map->window = mlx_init(1600, 1000, "FIL DE FER", true);
+	if (!map->window)
 		return (-1);
-	img = mlx_new_image(mlx, mlx->width, mlx->height);
-	if (!img)
+	map->img = mlx_new_image(map->window, map->window->width, \
+		map->window->height);
+	if (!map->img)
 	{
-		mlx_terminate(mlx);
+		mlx_terminate(map->window);
 		return (-1);
 	}
-	draw_background(img);
-	if (get_coordinates(img, map) < 0)
+	draw_background(map);
+	if (get_coordinates(map) < 0)
 	{
-		mlx_terminate(mlx);
+		mlx_terminate(map->window);
 		return (-1);
 	}
-	draw_area(img, map);
-	draw_map(img, map);
-	mlx_image_to_window(mlx, img, 0, 0);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	draw_area(map);
+	draw_map(map);
+	mlx_image_to_window(map->window, map->img, 0, 0);
+	mlx_loop_hook(map->window, ft_hook, map);
+	mlx_resize_hook(map->window, resize, map);
+	mlx_loop(map->window);
+	mlx_terminate(map->window);
 	return (1);
 }
 

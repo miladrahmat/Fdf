@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 12:30:54 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:17:00 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_map(t_map *map)
 	map->point_alloc = false;
 	map->width = 0;
 	map->height = 0;
-	map->zoom = 0;
+	map->zoom = 1;
 }
 
 t_draw	init_draw(int start_x, int start_y, int end_x, int end_y)
