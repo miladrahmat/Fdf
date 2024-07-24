@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 14:18:20 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:05:22 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <math.h>
 # include "./MLX42/include/MLX42/MLX42.h"
 # include "./libft/libft.h"
-# include "./libft/vector.h"
 
 typedef struct s_point
 {
@@ -64,6 +63,9 @@ typedef struct s_draw
 
 int			read_map(t_map *map, int fd, char **arg);
 int			get_coordinates(t_map *map);
+void		rotate_x(int x, int y, t_map *map);
+void		rotate_y(int x, int y, t_map *map);
+void		rotate_z(int x, int y, t_map *map);
 int			create_map(t_map *map, char **split, int index);
 void		init_map(t_map *map);
 void		free_map(t_map *map, int err);
@@ -71,9 +73,6 @@ void		set_scale(t_map *map);
 void		find_min_coordinates(t_map *map, t_point *min);
 void		find_max_coordinates(t_map *map, t_point *max);
 void		scale_coordinates(t_map *map, double scale);
-void		rotate_z(t_map *map);
-void		rotate_y(t_map *map);
-void		rotate_x(t_map *map);
 
 //line drawing functions
 
@@ -95,14 +94,16 @@ int			get_rgba(int r, int g, int b, int a);
 //helper functions
 
 void		split_free(char **arr);
-void		ft_hook(void *param);
 char		*add_alpha(char *str);
 int			determine_base(const char *str);
 
 //hooks
 
+void		ft_hook(void *param);
 void		resize(int32_t width, int32_t height, void *param);
 void		draw_again(void *param);
+void		hook_zoom(t_map *map);
 void		hook_translate(t_map *map);
+void		hook_rotate(t_map *map);
 
 #endif
