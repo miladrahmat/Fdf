@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/25 13:17:36 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:42:34 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,37 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	mlx_t		*window;
-	mlx_image_t	*img;
-	t_point		**point;
-	int			width;
-	int			height;
-	bool		point_alloc;
-	bool		isometric;
-	bool		top;
-	bool		front;
-	bool		right;
-	double		zoom;
-	double		alpha;
-	double		gamma;
-	double		theta;
-	int			x_trans;
-	int			y_trans;
+	mlx_t			*window;
+	mlx_image_t		*img;
+	mlx_image_t		*info_panel;
+	mlx_texture_t	*text;
+	t_point			**point;
+	int				width;
+	int				height;
+	bool			point_alloc;
+	bool			isometric;
+	bool			top;
+	bool			front;
+	bool			right;
+	double			zoom;
+	double			alpha;
+	double			gamma;
+	double			theta;
+	int				x_trans;
+	int				y_trans;
 }	t_map;
 
 typedef struct s_draw
 {
-	int		start_x;
-	int		start_y;
-	int		end_x;
-	int		end_y;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	double	fraction;
+	int				start_x;
+	int				start_y;
+	int				end_x;
+	int				end_y;
+	int				dx;
+	int				dy;
+	int				sx;
+	int				sy;
+	double			fraction;
 }	t_draw;
 
 //map functions

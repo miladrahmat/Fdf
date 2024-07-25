@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:31:20 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/24 12:31:54 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:35:55 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	resize(int32_t width, int32_t height, void *param)
 	}
 	draw_area(map);
 	draw_map(map);
-	mlx_image_to_window(map->window, map->img, 0, 0);
+	mlx_resize_image(map->info_panel, width / 5, height);
+	mlx_image_to_window(map->window, map->img, map->info_panel->width, 0);
+	mlx_image_to_window(map->window, map->info_panel, 0, 0);
 }
 
 void	draw_again(void *param)
@@ -43,8 +45,8 @@ void	draw_again(void *param)
 
 	map = param;
 	mlx_delete_image(map->window, map->img);
-	map->img = mlx_new_image(map->window, map->window->width, \
-		map->window->height);
+	map->img = mlx_new_image(map->window, map->window->width \
+		- map->info_panel->width, map->window->height);
 	if (!map->img)
 	{
 		mlx_terminate(map->window);
@@ -60,5 +62,6 @@ void	draw_again(void *param)
 	}
 	draw_area(map);
 	draw_map(map);
-	mlx_image_to_window(map->window, map->img, 0, 0);
+	mlx_image_to_window(map->window, map->img, map->info_panel->width, 0);
+	mlx_image_to_window(map->window, map->info_panel, 0, 0);
 }
