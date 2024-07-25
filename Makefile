@@ -22,8 +22,7 @@ SRCS	= $(SRC_DIR)fdf.c \
 			$(SRC_DIR)hooks.c \
 			$(SRC_DIR)color.c \
 			$(SRC_DIR)scale.c \
-			$(SRC_DIR)hook_funcs.c \
-			$(SRC_DIR)rotate.c
+			$(SRC_DIR)hook_funcs.c
 
 OBJS	= ${SRCS:%.c=%.o}
 

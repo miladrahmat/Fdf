@@ -6,16 +6,35 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 10:36:03 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:05:04 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-int	get_rgba(int r, int g, int b, int a)
+char	*add_alpha(char *str)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	char	*rgba;
+	char	*nl;
+
+	if (ft_strchr(str, '\n') != 0)
+	{
+		nl = ft_substr(str, 0, ft_strlen(str) - 1);
+		if (determine_base(str) == 1)
+			rgba = ft_strjoin(nl, "ff");
+		else
+			rgba = ft_strjoin(nl, "FF");
+		free(nl);
+	}
+	else
+	{
+		if (determine_base(str) == 1)
+			rgba = ft_strjoin(str, "ff");
+		else
+			rgba = ft_strjoin(str, "FF");
+	}
+	return (rgba);
 }
 
 void	convert_to_rgba(t_point *point)
@@ -28,7 +47,6 @@ void	convert_to_rgba(t_point *point)
 
 uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line)
 {
-	uint32_t	color;
 	int			r;
 	int			g;
 	int			b;
@@ -38,8 +56,7 @@ uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line)
 	g = start->g + (end->g - start->g) * line->fraction;
 	b = start->b + (end->b - start->b) * line->fraction;
 	a = start->a + (end->a - start->a) * line->fraction;
-	color = get_rgba(r, g, b, a);
-	return (color);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 int	determine_base(const char *str)

@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:22:56 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:43:31 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,26 @@ static void	to_isometric(int x, int y, t_map *map)
 		+ (map->point[y][x].z * sin(map->gamma));
 }
 
-/* static void	to_isometric(int x, int y, t_map *map)
+static void	to_orthographic(int x, int y, t_map *map)
 {
-	int tmp;
-
-	map->point[y][x].x = (x - y) * cos(30 * (PI / 180));
-	map->point[y][x].y = (x + y) * sin(30 * (PI / 180)) - map->point[y][x].z;
-	tmp = map->point[y][x].x;
-	map->point[y][x].x = (x - y) * cos(30 * (PI / 180));
-	map->point[y][x].y = (x + y) * sin(30 * (PI / 180)) - map->point[y][x].z;
-} */
+	if (map->point[y][x].z == 0)
+		map->point[y][x].z = 1;
+	if (map->top == true)
+	{
+		map->point[y][x].x = x;
+		map->point[y][x].y = y;
+	}
+	else if (map->front == true)
+	{
+		map->point[y][x].x = x;
+		map->point[y][x].y = -map->point[y][x].z;
+	}
+	else if (map->right == true)
+	{
+		map->point[y][x].x = y;
+		map->point[y][x].y = -map->point[y][x].z;
+	}
+}
 
 int	get_coordinates(t_map *map)
 {
@@ -74,10 +84,10 @@ int	get_coordinates(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			// rotate_x(x, y, map);
-			// rotate_y(x, y, map);
-			// rotate_z(x, y, map);
-			to_isometric(x, y, map);
+			if (map->isometric == true)
+				to_isometric(x, y, map);
+			else
+				to_orthographic(x, y, map);
 			x++;
 		}
 		y++;

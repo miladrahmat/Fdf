@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 10:46:12 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 11:13:43 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:48:31 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	scale_coordinates(t_map *map, double scale)
 	int	x;
 	int	y;
 
+	if (scale <= 0)
+	{
+		if (map->img->width / 2 > map->img->height / 2)
+			scale = map->img->height / 2;
+		else
+			scale = map->img->width / 2;
+	}
 	y = 0;
 	while (y < map->height)
 	{
@@ -42,8 +49,6 @@ void	set_scale(t_map *map)
 	find_max_coordinates(map, &max);
 	scale_x = (max.x - min.x) / (map->img->width / 2);
 	scale_y = (max.y - min.y) / (map->img->height / 2);
-	if (scale_x <= 0 || scale_y <= 0)
-		return ;
 	scale_coordinates(map, fmin(1 / scale_x, 1 / scale_y));
 }
 

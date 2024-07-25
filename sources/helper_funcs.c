@@ -6,41 +6,37 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 10:54:17 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:11:00 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:09:12 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	draw_background(t_map *map)
+{
+	int			color;
+	uint32_t	x;
+	uint32_t	y;
+
+	color = 0x000000FF;
+	y = 0;
+	while (y < map->img->height)
+	{
+		x = 0;
+		while (x < map->img->width)
+		{
+			mlx_put_pixel(map->img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
 
 double	fraction(double start, double end, double current)
 {
 	if (start != end)
 		return ((current - start) / (end - start));
 	return (0);
-}
-
-char	*add_alpha(char *str)
-{
-	char	*rgba;
-	char	*nl;
-
-	if (ft_strchr(str, '\n') != 0)
-	{
-		nl = ft_substr(str, 0, ft_strlen(str) - 1);
-		if (determine_base(str) == 1)
-			rgba = ft_strjoin(nl, "ff");
-		else
-			rgba = ft_strjoin(nl, "FF");
-		free(nl);
-	}
-	else
-	{
-		if (determine_base(str) == 1)
-			rgba = ft_strjoin(str, "ff");
-		else
-			rgba = ft_strjoin(str, "FF");
-	}
-	return (rgba);
 }
 
 void	split_free(char **arr)
@@ -63,6 +59,7 @@ void	init_map(t_map *map)
 {
 	map->point = NULL;
 	map->point_alloc = false;
+	map->isometric = true;
 	map->width = 0;
 	map->height = 0;
 	map->zoom = 1;

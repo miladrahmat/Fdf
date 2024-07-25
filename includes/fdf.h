@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:05:22 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:17:36 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ typedef struct s_map
 	int			width;
 	int			height;
 	bool		point_alloc;
+	bool		isometric;
+	bool		top;
+	bool		front;
+	bool		right;
 	double		zoom;
 	double		alpha;
 	double		gamma;
@@ -63,12 +67,7 @@ typedef struct s_draw
 
 int			read_map(t_map *map, int fd, char **arg);
 int			get_coordinates(t_map *map);
-void		rotate_x(int x, int y, t_map *map);
-void		rotate_y(int x, int y, t_map *map);
-void		rotate_z(int x, int y, t_map *map);
 int			create_map(t_map *map, char **split, int index);
-void		init_map(t_map *map);
-void		free_map(t_map *map, int err);
 void		set_scale(t_map *map);
 void		find_min_coordinates(t_map *map, t_point *min);
 void		find_max_coordinates(t_map *map, t_point *max);
@@ -89,13 +88,14 @@ void		convert_to_rgba(t_point *point);
 double		fraction(double start, double end, double current);
 uint32_t	calculate_color(t_point *start, t_point *end, t_draw *line);
 int			get_color(t_map *map, char *str, int index);
-int			get_rgba(int r, int g, int b, int a);
+char		*add_alpha(char *str);
 
 //helper functions
 
 void		split_free(char **arr);
-char		*add_alpha(char *str);
 int			determine_base(const char *str);
+void		init_map(t_map *map);
+void		free_map(t_map *map, int err);
 
 //hooks
 
@@ -105,5 +105,6 @@ void		draw_again(void *param);
 void		hook_zoom(t_map *map);
 void		hook_translate(t_map *map);
 void		hook_rotate(t_map *map);
+void		hook_projection(t_map *map);
 
 #endif

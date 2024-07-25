@@ -6,31 +6,11 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:20:24 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/07/25 12:41:45 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	draw_background(t_map *map)
-{
-	int			color;
-	uint32_t	x;
-	uint32_t	y;
-
-	color = get_rgba(0, 0, 0, 255);
-	y = 0;
-	while (y < map->img->height)
-	{
-		x = 0;
-		while (x < map->img->width)
-		{
-			mlx_put_pixel(map->img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}
 
 static int	handle_window(t_map *map)
 {
