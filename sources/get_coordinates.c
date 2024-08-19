@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/25 15:43:31 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:37:54 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static void	to_isometric(int x, int y, t_map *map)
 
 static void	to_orthographic(int x, int y, t_map *map)
 {
-	if (map->point[y][x].z == 0)
-		map->point[y][x].z = 1;
 	if (map->top == true)
 	{
 		map->point[y][x].x = x;
