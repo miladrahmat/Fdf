@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:05:22 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 14:46:52 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:49:58 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	ft_hook(void *param)
 void	hook_zoom(t_map *map)
 {
 	if (mlx_is_key_down(map->window, MLX_KEY_EQUAL))
-		map->zoom += 0.1;
-	if (mlx_is_key_down(map->window, MLX_KEY_MINUS) && map->zoom > 1)
-		map->zoom -= 0.1;
+		map->zoom += 0.05;
+	if (mlx_is_key_down(map->window, MLX_KEY_MINUS) && map->zoom > 0.05)
+		map->zoom -= 0.05;
 }
 
 void	hook_translate(t_map *map)
