@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/22 10:40:19 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:39:58 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	create_map(t_map *map, char **split, int index)
 	}
 	if (map->height == 0)
 		map->width = index;
-	if (index != map->width)
+	else if (index != map->width)
 	{
 		split_free(split);
 		return (-1);
