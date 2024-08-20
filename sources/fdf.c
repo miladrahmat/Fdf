@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrahmat- <mrahmat-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:41 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/07/25 17:42:02 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:27:56 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,10 @@ static int	handle_images(t_map *map)
 		map->window->height);
 	if (!map->img)
 		return (-1);
-	map->text = mlx_load_png("./includes/FDF.png");
-	if (!map->text)
-		return (-1);
-	map->info_panel = mlx_texture_to_image(map->window, map->text);
-	if (!map->info_panel)
-	{
-		mlx_delete_texture(map->text);
-		return (-1);
-	}
 	draw_background(map);
 	if (get_coordinates(map) < 0)
 	{
 		mlx_terminate(map->window);
-		mlx_delete_texture(map->text);
 		return (-1);
 	}
 	return (1);
@@ -49,12 +39,9 @@ static int	handle_window(t_map *map)
 	}
 	draw_area(map);
 	draw_map(map);
-	mlx_image_to_window(map->window, map->img, map->info_panel->width, 0);
-	mlx_image_to_window(map->window, map->info_panel, 0, 0);
+	mlx_image_to_window(map->window, map->img, 0, 0);
 	mlx_loop_hook(map->window, ft_hook, map);
-	mlx_resize_hook(map->window, resize, map);
 	mlx_loop(map->window);
-	mlx_delete_texture(map->text);
 	mlx_terminate(map->window);
 	return (1);
 }
