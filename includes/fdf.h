@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:15:01 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:33:14 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_map
 {
 	mlx_t			*window;
 	mlx_image_t		*img;
-	mlx_image_t		*info_panel;
 	t_point			**point;
 	int				width;
 	int				height;
