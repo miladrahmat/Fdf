@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/21 15:33:14 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:27:22 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void		free_map(t_map *map, int err);
 //hooks
 
 void		ft_hook(void *param);
-void		resize(int32_t width, int32_t height, void *param);
 void		draw_again(void *param);
 void		hook_zoom(t_map *map);
 void		hook_translate(t_map *map);
