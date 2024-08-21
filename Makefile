@@ -12,7 +12,7 @@ HEADERS	= -I $(LIBMLX)/include/MLX42 -I $(INC_DIR)
 
 LIBFT	= $(INC_DIR)libft/libft.a
 
-LIBS	= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBS	= $(LIBMLX)/build/libmlx42.a -lglfw -lm
 
 SRCS	= $(SRC_DIR)fdf.c \
 			$(SRC_DIR)map_funcs.c \
