@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:05:22 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:49:58 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:32:27 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void	hook_rotate(t_map *map)
 		map->theta += PI / 180;
 		map->gamma += PI / 180;
 	}
-	if (mlx_is_key_down(map->window, MLX_KEY_D))
+	if (mlx_is_key_down(map->window, MLX_KEY_A))
 	{
 		map->alpha += PI / 180;
 		map->theta += PI / 180;
 	}
-	if (mlx_is_key_down(map->window, MLX_KEY_A))
+	if (mlx_is_key_down(map->window, MLX_KEY_D))
 	{
 		map->alpha -= PI / 180;
 		map->theta -= PI / 180;

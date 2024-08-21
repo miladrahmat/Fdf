@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:31:20 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:27:47 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:38:34 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	draw_again(void *param)
 {
 	t_map	*map;
+	int32_t	depth;
 
 	map = param;
 	mlx_delete_image(map->window, map->img);
@@ -35,5 +36,6 @@ void	draw_again(void *param)
 	}
 	draw_area(map);
 	draw_map(map);
-	mlx_image_to_window(map->window, map->img, 0, 0);
+	depth = mlx_image_to_window(map->window, map->img, 0, 0);
+	mlx_set_instance_depth(map->img->instances, depth - 1);
 }
