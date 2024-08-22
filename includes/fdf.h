@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:05:28 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/21 16:27:22 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:11:48 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define PI 3.141592653589793238462643383279502884197
 # include <fcntl.h>
 # include <math.h>
-# include "./MLX42/include/MLX42/MLX42.h"
+# include "MLX42.h"
 # include "./libft/libft.h"
 
 typedef struct s_point
