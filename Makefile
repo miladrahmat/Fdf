@@ -39,11 +39,11 @@ libmlx: .libmlx
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME) && \
-		echo "\e[1;32m fdf ready! Enjoy 🤩"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME) && \
+		echo "\e[1;32m fdf ready! Enjoy 🤩 \e[0;37m"
 
 $(LIBFT):
-	@make -C $(INC_DIR)libft && echo "\e[1;32m Libft compiled!"
+	@make -C $(INC_DIR)libft && echo "\e[1;32m Libft compiled! \e[0;37m"
 
 clean:
 	@make clean -C $(INC_DIR)libft && rm -rf $(OBJS) && \
