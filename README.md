@@ -36,7 +36,7 @@ Executing the program using the example map:
 ./fdf example_map.fdf
 ```
 
-The map is shown in a window in isometric projection:
+The map is displayed in a window in isometric projection:
 
 ![Screenshot from 2024-08-27 11-59-53](https://github.com/user-attachments/assets/5d5414f4-1c60-4723-b1e2-b3f68b6b5c5f)
 
@@ -47,15 +47,14 @@ A map has the following rules:
 - The vertical position corresponds to its ordinate.
 - The value corresponds to its altitude.
 
-You can also create a map with colors given as hexadecimal numbers:
-
+You can also create maps with custom colors by specifying colors as hexadecimal numbers in your map file. For example:
 ```
 0,0x810202 0,0x810202 0,0x810202
 0,0x810202 10,0xFFFFFF 0,0x810202
 0,0x810202 0,0x810202 0,0x810202
 ```
 
-Which will show the following image:
+This allows you to control the color of each point on the map. The program will display your map using gradient colors for enhanced visual depth.
 
 ![image](https://github.com/user-attachments/assets/3d325b37-0850-4ad9-8f58-3633e42c5aee)
 
