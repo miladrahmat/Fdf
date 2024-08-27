@@ -10,8 +10,9 @@
 #
 ## Content
 - [Introduction](#introduction)
-- [Example](#example)
+- [Examples](#examples)
 - [Bonus](#bonus)
+- [Installation](#installation)
 
 ## Introduction
 
@@ -21,7 +22,7 @@ For this project, I utilized the [MLX42](https://github.com/codam-coding-college
 
 I chose MLX42 over MiniLibX because it is actively maintained, well-documented, performs efficiently, and is cross-platform, ensuring compatibility with various operating systems.
 
-## Example
+## Examples
 
 Example map:
 
@@ -67,3 +68,14 @@ For the bonus part of the project, the following features were implemented:
 - Integrated model rotation for dynamic viewing.
 
 As an extra bonus, I included an introduction section within the window itself, providing users with instructions on which keys can be pressed for interaction. Additionally, I added the ability to resize the window for a more flexible user experience.
+
+## Installation
+
+To test the program, you'll need to follow the setup instructions provided in the official [MLX42 repository.](https://github.com/codam-coding-college/MLX42?tab=readme-ov-file#general-compilation) Once the library is successfully compiled on your system, you can compile the program with the following commands:
+```
+git clone https://github.com/miladrahmat/Fdf.git
+cd Fdf
+make
+```
+
+After compiling, you can run the program using maps that you create. Refer to the examples provided [here](#examples) for guidance on how to format your own maps.
