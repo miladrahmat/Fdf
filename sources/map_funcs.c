@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 10:37:46 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:14:39 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/30 15:36:43 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	read_map(t_map *map, int fd, char **arg)
 int	create_map(t_map *map, char **split, int index)
 {
 	int		i;
-	int		res;
 
 	i = 0;
 	while (split[i] != NULL)
@@ -88,8 +87,7 @@ int	create_map(t_map *map, char **split, int index)
 			get_color(map, split[i++], index++);
 		else
 		{
-			res = ft_atoi(split[i++]);
-			map->point[map->height][index].z = res;
+			map->point[map->height][index].z = ft_atoi(split[i++]);
 			map->point[map->height][index].color = ft_atoi_base("ffffffff", 16);
 			convert_to_rgba(&map->point[map->height][index++]);
 		}
@@ -116,12 +114,10 @@ void	free_map(t_map *map, int err)
 	if (map->point_alloc == true)
 	{
 		while (i > 0)
-		{
-			free(map->point[i]);
-			i--;
-		}
+			free(map->point[i--]);
 		free(map->point[i]);
 		free(map->point);
 		map->point_alloc = false;
 	}
+	free_backup(map, err);
 }

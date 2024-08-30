@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 10:46:12 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:14:33 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/30 15:53:26 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	scale_coordinates(t_map *map, double scale)
 	int	x;
 	int	y;
 
-	if (scale <= 0)
+	if (scale / 2 <= 0)
 	{
 		if (map->img->width / 2 > map->img->height / 2)
 			scale = map->img->height / 2;
@@ -30,8 +30,8 @@ void	scale_coordinates(t_map *map, double scale)
 		x = 0;
 		while (x < map->width)
 		{
-			map->point[y][x].x *= scale;
-			map->point[y][x].y *= scale;
+			map->point[y][x].x *= scale / 2;
+			map->point[y][x].y *= scale / 2;
 			x++;
 		}
 		y++;
@@ -92,6 +92,29 @@ void	find_max_coordinates(t_map *map, t_point *max)
 				max->x = map->point[y][x].x;
 			if (map->point[y][x].y > max->y)
 				max->y = map->point[y][x].y;
+			x++;
+		}
+		y++;
+	}
+}
+
+void	find_min_max_z(t_map *map)
+{
+	int	x;
+	int	y;
+
+	map->max_z = map->backup[0][0].z;
+	map->min_z = map->backup[0][0].z;
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			if (map->backup[y][x].z > map->max_z)
+				map->max_z = map->backup[y][x].z;
+			if (map->backup[y][x].z < map->min_z)
+				map->min_z = map->backup[y][x].z;
 			x++;
 		}
 		y++;

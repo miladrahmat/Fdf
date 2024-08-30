@@ -6,7 +6,7 @@
 /*   By: mrahmat- <mrahmat-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:09:35 by mrahmat-          #+#    #+#             */
-/*   Updated: 2024/08/20 15:14:46 by mrahmat-         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:41:51 by mrahmat-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,7 @@ static void	shift_coordinates(t_map *map, double shift_x, double shift_y)
 {
 	int		x;
 	int		y;
-	int		offset_x;
-	int		offset_y;
 
-	offset_x = map->img->width / 3;
-	offset_y = map->img->height / 3;
 	y = 0;
 	while (y < map->height)
 	{
@@ -31,10 +27,6 @@ static void	shift_coordinates(t_map *map, double shift_x, double shift_y)
 			map->point[y][x].y *= map->zoom;
 			map->point[y][x].x += shift_x;
 			map->point[y][x].y += shift_y;
-			map->point[y][x].x += offset_x;
-			map->point[y][x].y += offset_y;
-			map->point[y][x].x += map->x_trans;
-			map->point[y][x].y += map->y_trans;
 			x++;
 		}
 		y++;
@@ -43,30 +35,57 @@ static void	shift_coordinates(t_map *map, double shift_x, double shift_y)
 
 static void	to_isometric(int x, int y, t_map *map)
 {
-	map->point[y][x].x = (x * cos(map->alpha))
-		+ (y * cos(map->theta))
-		+ (map->point[y][x].z * cos(map->gamma));
-	map->point[y][x].y = (x * sin(map->alpha))
-		+ (y * sin(map->theta))
-		+ (map->point[y][x].z * sin(map->gamma));
+	double	temp_x;
+
+	temp_x = map->point[y][x].x;
+	map->point[y][x].x = (temp_x - map->point[y][x].y) * \
+		cos(0.523599);
+	map->point[y][x].y = (temp_x + map->point[y][x].y) * \
+		sin(0.523599) - map->point[y][x].z;
 }
 
 static void	to_orthographic(int x, int y, t_map *map)
 {
 	if (map->top == true)
 	{
-		map->point[y][x].x = x;
-		map->point[y][x].y = y;
+		map->point[y][x].x = map->point[y][x].x;
+		map->point[y][x].y = map->point[y][x].y;
 	}
 	else if (map->front == true)
 	{
-		map->point[y][x].x = x;
+		map->point[y][x].x = map->point[y][x].x;
 		map->point[y][x].y = -map->point[y][x].z;
 	}
 	else if (map->right == true)
 	{
-		map->point[y][x].x = y;
+		map->point[y][x].x = map->point[y][x].y;
 		map->point[y][x].y = -map->point[y][x].z;
+	}
+}
+
+void	scale_z(t_map *map)
+{
+	int	scale;
+	int	x;
+	int	y;
+
+	find_min_max_z(map);
+	scale = map->max_z - map->min_z;
+	if (scale == 0)
+		scale = 1;
+	scale = ((map->img->height / 10) + (map->img->width / 10)) / scale;
+	if (scale == 0)
+		scale = 1;
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			map->point[y][x].z = map->backup[y][x].z * scale;
+			x++;
+		}
+		y++;
 	}
 }
 
@@ -76,6 +95,9 @@ int	get_coordinates(t_map *map)
 	int		x;
 	int		y;
 
+	inital_points(map);
+	set_scale(map);
+	rotate_all(map);
 	y = 0;
 	while (y < map->height)
 	{
@@ -90,8 +112,8 @@ int	get_coordinates(t_map *map)
 		}
 		y++;
 	}
-	set_scale(map);
 	find_min_coordinates(map, &min);
 	shift_coordinates(map, -min.x, -min.y);
+	center_map(map);
 	return (1);
 }
